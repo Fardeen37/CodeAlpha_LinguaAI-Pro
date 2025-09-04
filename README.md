@@ -65,7 +65,7 @@ Navigate into the folder and open the main HTML file:
 cd CodeAlpha_LinguaAI-Pro
 ```
 
-Then double-click `LinguaAI Pro.html` or open it in your browser.
+Then double-click `LinguaAI PRO.html` or open it in your browser.
 
 ### 3️⃣ Get Microsoft Translator API Key
 
