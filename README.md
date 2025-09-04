@@ -1,4 +1,4 @@
-# 🌍 CodeAlpha – LinguaAI Pro
+# 🌍 LinguaAI Pro
 
 **LinguaAI Pro** is a premium AI-powered translation web application built with **HTML, CSS, and JavaScript** that integrates the **Microsoft Translator API** to deliver fast, accurate, and reliable translations. With support for **130+ languages**, real-time auto-detection, confidence scoring, and a modern UI, LinguaAI Pro ensures a professional-grade translation experience.  
 
