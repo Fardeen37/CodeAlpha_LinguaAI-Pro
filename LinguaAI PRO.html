@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinguaAI Pro - Enterprise Translation Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        
+        :root {
+            /* Light theme colors */
+            --color-primary: #2563eb;
+            --color-primary-hover: #1d4ed8;
+            --color-primary-light: #dbeafe;
+            --color-secondary: #64748b;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-error: #ef4444;
+            --color-info: #06b6d4;
+            
+            --color-background: #ffffff;
+            --color-surface: #f8fafc;
+            --color-surface-elevated: #ffffff;
+            --color-border: #e2e8f0;
+            --color-border-hover: #cbd5e1;
+            --color-text-primary: #0f172a;
+            --color-text-secondary: #475569;
+            --color-text-tertiary: #94a3b8;
+            --color-text-inverse: #ffffff;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 24px;
+            
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            --spacing-3xl: 4rem;
+            
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .dark {
+            --color-background: #0f172a;
+            --color-surface: #1e293b;
+            --color-surface-elevated: #334155;
+            --color-border: #334155;
+            --color-border-hover: #475569;
+            --color-text-primary: #f8fafc;
+            --color-text-secondary: #cbd5e1;
+            --color-text-tertiary: #64748b;
+            --color-text-inverse: #0f172a;
+            
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            font-size: var(--font-size-base);
+            transition: background-color var(--transition-base), color var(--transition-base);
+            overflow-x: hidden;
+        }
+
+        /* Enhanced Dark Mode Support */
+        .theme-toggle {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 1000;
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-sm);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            box-shadow: var(--shadow-md);
+        }
+
+        .theme-toggle:hover {
+            background: var(--color-border);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .theme-toggle i {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            transition: color var(--transition-base);
+        }
+
+        /* Background Pattern */
+        .background-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            z-index: -1;
+            background-image: 
+                radial-gradient(circle at 25% 25%, var(--color-primary) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, var(--color-primary) 1px, transparent 1px);
+            background-size: 60px 60px;
+            background-position: 0 0, 30px 30px;
+        }
+
+        /* Layout */
+        .app-container {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-background) 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl);
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: var(--spacing-3xl) 0;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-4xl);
+            font-weight: 800;
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-md);
+            text-decoration: none;
+            transition: all var(--transition-slow);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--font-size-2xl);
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-base);
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(10deg) scale(1.05);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .tagline {
+            font-size: var(--font-size-lg);
+            color: var(--color-text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-border-hover);
+        }
+
+        .card-header {
+            padding: var(--spacing-xl);
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-surface);
+        }
+
+        .card-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-text-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .card-body {
+            padding: var(--spacing-xl);
+        }
+
+        /* API Configuration */
+        .api-section {
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .input-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .input-label {
+            display: block;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--color-text-primary);
+            transition: all var(--transition-base);
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--color-primary);
+            background: var(--color-background);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+
+        .input-field::placeholder {
+            color: var(--color-text-tertiary);
+        }
+
+        /* Status Indicator */
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            transition: all var(--transition-base);
+        }
+
+        .status-indicator.connected {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-indicator.disconnected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--color-error);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status-indicator.testing {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--color-warning);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: var(--spacing-lg);
+            align-items: center;
+            margin-bottom: var(--spacing-2xl);
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-field {
+            width: 100%;
+            padding: var(--spacing-lg);
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--color-text-primary);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            appearance: none;
+            outline: none;
+        }
+
+        .select-field:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+
+        .select-field option {
+            background: var(--color-surface-elevated);
+            color: var(--color-text-primary);
+            padding: var(--spacing-sm);
+        }
+
+        .select-wrapper::after {
+            content: '\f078';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            right: var(--spacing-md);
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-secondary);
+            pointer-events: none;
+            transition: transform var(--transition-base);
+        }
+
+        .select-wrapper:hover::after {
+            color: var(--color-primary);
+        }
+
+        /* Swap Button */
+        .swap-button {
+            width: 48px;
+            height: 48px;
+            background: var(--color-primary);
+            border: none;
+            border-radius: var(--radius-lg);
+            color: white;
+            font-size: var(--font-size-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-md);
+        }
+
+        .swap-button:hover {
+            background: var(--color-primary-hover);
+            transform: rotate(180deg) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Translation Area */
+        .translation-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .text-panel {
+            position: relative;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--color-surface);
+            border-bottom: 1px solid var(--color-border);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+        }
+
+        .panel-title {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .text-area {
+            width: 100%;
+            min-height: 300px;
+            padding: var(--spacing-xl);
+            background: var(--color-background);
+            border: 2px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-family: inherit;
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            resize: vertical;
+            transition: all var(--transition-base);
+            outline: none;
+        }
+
+        .text-area:focus {
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px var(--color-primary-light);
+        }
+
+        .text-area::placeholder {
+            color: var(--color-text-tertiary);
+        }
+
+        .output-area {
+            background: var(--color-surface);
+            border: 2px solid var(--color-border);
+            border-top: none;
+            border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+            min-height: 300px;
+            padding: var(--spacing-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text-tertiary);
+            font-style: italic;
+            position: relative;
+            overflow-y: auto;
+        }
+
+        .output-content {
+            color: var(--color-text-primary);
+            font-style: normal;
+            line-height: 1.6;
+            width: 100%;
+        }
+
+        /* Panel Metadata */
+        .panel-meta {
+            position: absolute;
+            bottom: var(--spacing-md);
+            right: var(--spacing-md);
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .meta-item {
+            background: var(--color-surface-elevated);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-xs);
+            color: var(--color-text-tertiary);
+            border: 1px solid var(--color-border);
+        }
+
+        /* Buttons */
+        .button-group {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md) var(--spacing-xl);
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left var(--transition-slow);
+        }
+
+        .btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--color-primary-hover);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--color-surface);
+            color: var(--color-text-primary);
+            border: 2px solid var(--color-border);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--color-surface-elevated);
+            border-color: var(--color-primary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Loading State */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-lg);
+            z-index: 10;
+        }
+
+        .dark .loading-overlay {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--color-border);
+            border-top: 3px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-3xl);
+        }
+
+        .feature-card {
+            padding: var(--spacing-xl);
+            text-align: center;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-hover));
+            transform: scaleX(0);
+            transition: transform var(--transition-base);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-hover));
+            border-radius: var(--radius-xl);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-lg);
+            color: white;
+            font-size: var(--font-size-xl);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-base);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .feature-description {
+            color: var(--color-text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            top: var(--spacing-xl);
+            right: var(--spacing-xl);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            max-width: 400px;
+        }
+
+        .toast {
+            background: var(--color-surface-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-xl);
+            transform: translateX(450px);
+            transition: all var(--transition-slow);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-sm);
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon {
+            background: var(--color-success);
+        }
+
+        .toast.error .toast-icon {
+            background: var(--color-error);
+        }
+
+        .toast.warning .toast-icon {
+            background: var(--color-warning);
+        }
+
+        .toast.info .toast-icon {
+            background: var(--color-info);
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .toast-message {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Security Alert */
+        .security-alert {
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .security-alert .alert-icon {
+            color: var(--color-warning);
+            font-size: var(--font-size-lg);
+            flex-shrink: 0;
+        }
+
+        .security-alert .alert-content {
+            flex: 1;
+        }
+
+        .security-alert .alert-title {
+            font-weight: 600;
+            color: var(--color-warning);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .security-alert .alert-message {
+            color: var(--color-text-secondary);
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .header {
+                padding: var(--spacing-xl) 0;
+            }
+
+            .logo {
+                font-size: var(--font-size-3xl);
+            }
+
+            .language-selector {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .swap-button {
+                justify-self: center;
+            }
+
+            .translation-area {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .toast-container {
+                left: var(--spacing-md);
+                right: var(--spacing-md);
+                max-width: none;
+            }
+
+            .toast {
+                transform: translateY(-100px);
+            }
+
+            .toast.show {
+                transform: translateY(0);
+            }
+
+            .theme-toggle {
+                top: var(--spacing-md);
+                right: var(--spacing-md);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Focus Styles */
+        .btn:focus-visible,
+        .input-field:focus-visible,
+        .select-field:focus-visible {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="background-pattern"></div>
+        
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <i class="fas fa-moon" id="themeIcon"></i>
+        </button>
+
+        <div class="container">
+            <!-- Header -->
+            <header class="header">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <span>LinguaAI Pro</span>
+                </a>
+                <p class="tagline">Enterprise-grade AI translation platform for global communication excellence</p>
+            </header>
+
+            <!-- API Configuration -->
+            <section class="api-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-key"></i>
+                            API Configuration
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label for="apiKeyInput" class="input-label">Microsoft Translator API Key</label>
+                            <input 
+                                type="password" 
+                                id="apiKeyInput" 
+                                class="input-field" 
+                                placeholder="Enter your Microsoft Translator API key..."
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                        </div>
+                        
+                        <div class="status-indicator disconnected" id="apiStatus">
+                            <i class="fas fa-times-circle"></i>
+                            <span>API Key Required</span>
+                        </div>
+
+                        <div class="security-alert">
+                            <div class="alert-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="alert-content">
+                                <div class="alert-title">Security Notice</div>
+                                <div class="alert-message">
+                                    Your API key is stored securely in browser memory during this session only. 
+                                    For production deployment, implement server-side API proxying to protect credentials.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Translation Interface -->
+            <section class="translation-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-exchange-alt"></i>
+                            Translation Studio
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Language Selector -->
+                        <div class="language-selector">
+                            <div class="select-wrapper">
+                                <select id="sourceLanguage" class="select-field" aria-label="Source language">
+                                    <option value="auto">Auto Detect</option>
+                                </select>
+                            </div>
+                            
+                            <button class="swap-button" id="swapButton" aria-label="Swap languages">
+                                <i class="fas fa-exchange-alt"></i>
+                            </button>
+                            
+                            <div class="select-wrapper">
+                                <select id="targetLanguage" class="select-field" aria-label="Target language">
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Translation Area -->
+                        <div class="translation-area">
+                            <div class="text-panel">
+                                <div class="panel-header">
+                                    <div class="panel-title">
+                                        <i class="fas fa-edit"></i>
+                                        Source Text
+                                    </div>
+                                </div>
+                                <textarea 
+                                    id="sourceText" 
+                                    class="text-area" 
+                                    placeholder="Enter text to translate..."
+                                    maxlength="10000"
+                                    aria-label="Source text input"
+                                ></textarea>
+                                <div class="panel-meta">
+                                    <div class="meta-item" id="characterCount">0 / 10,000</div>
+                                    <div class="meta-item" id="detectedLanguage" style="display: none;">
+                                        <i class="fas fa-eye"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-panel">
+                                <div class="panel-header">
+                                    <div class="panel-title">
+                                        <i class="fas fa-language"></i>
+                                        Translation Output
+                                    </div>
+                                </div>
+                                <div id="translationOutput" class="output-area">
+                                    Translation will appear here...
+                                </div>
+                                <div class="panel-meta">
+                                    <div class="meta-item" id="confidenceScore" style="display: none;">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span></span>
+                                    </div>
+                                </div>
+                                <div class="loading-overlay" id="loadingOverlay">
+                                    <div class="spinner"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="button-group">
+                            <button class="btn btn-primary" id="translateButton" disabled>
+                                <i class="fas fa-magic"></i>
+                                Translate
+                            </button>
+                            <button class="btn btn-secondary" id="copyButton" disabled>
+                                <i class="fas fa-copy"></i>
+                                Copy Result
+                            </button>
+                            <button class="btn btn-secondary" id="clearButton">
+                                <i class="fas fa-trash-alt"></i>
+                                Clear All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features -->
+            <section class="features-section">
+                <div class="features-grid">
+                    <div class="feature-card card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3 class="feature-title">Lightning Performance</h3>
+                        <p class="feature-description">
+                            Instant translations powered by Microsoft's advanced neural machine translation technology
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <h3 class="feature-title">Enterprise Accuracy</h3>
+                        <p class="feature-description">
+                            Context-aware translations with confidence scoring for business-critical communications
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3 class="feature-title">Global Coverage</h3>
+                        <p class="feature-description">
+                            Support for 130+ languages and regional dialects with automatic language detection
+                        </p>
+                    </div>
+                    
+                    <div class="feature-card card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Secure Integration</h3>
+                        <p class="feature-description">
+                            Direct API integration with enterprise-grade security and data protection standards
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        class LinguaAIPro {
+            constructor() {
+                this.apiKey = '';
+                this.endpoint = 'https://api.cognitive.microsofttranslator.com';
+                this.supportedLanguages = {};
+                this.isApiReady = false;
+                this.toastId = 0;
+                
+                this.initializeElements();
+                this.initializeTheme();
+                this.attachEventListeners();
+                this.showWelcomeMessage();
+            }
+
+            initializeElements() {
+                this.apiKeyInput = document.getElementById('apiKeyInput');
+                this.apiStatus = document.getElementById('apiStatus');
+                this.sourceText = document.getElementById('sourceText');
+                this.sourceLanguage = document.getElementById('sourceLanguage');
+                this.targetLanguage = document.getElementById('targetLanguage');
+                this.translationOutput = document.getElementById('translationOutput');
+                this.translateButton = document.getElementById('translateButton');
+                this.copyButton = document.getElementById('copyButton');
+                this.clearButton = document.getElementById('clearButton');
+                this.swapButton = document.getElementById('swapButton');
+                this.loadingOverlay = document.getElementById('loadingOverlay');
+                this.characterCount = document.getElementById('characterCount');
+                this.detectedLanguage = document.getElementById('detectedLanguage');
+                this.confidenceScore = document.getElementById('confidenceScore');
+                this.toastContainer = document.getElementById('toastContainer');
+                this.themeToggle = document.getElementById('themeToggle');
+                this.themeIcon = document.getElementById('themeIcon');
+            }
+
+            initializeTheme() {
+                const savedTheme = localStorage.getItem('linguaai-theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                // Set initial theme
+                if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                    this.themeIcon.className = 'fas fa-sun';
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    this.themeIcon.className = 'fas fa-moon';
+                }
+
+                // Listen for system theme changes
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                    if (!localStorage.getItem('linguaai-theme')) {
+                        if (e.matches) {
+                            document.documentElement.classList.add('dark');
+                            this.themeIcon.className = 'fas fa-sun';
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                            this.themeIcon.className = 'fas fa-moon';
+                        }
+                    }
+                });
+            }
+
+            attachEventListeners() {
+                this.apiKeyInput.addEventListener('input', this.debounce(() => this.handleApiKeyInput(), 500));
+                this.translateButton.addEventListener('click', () => this.translate());
+                this.copyButton.addEventListener('click', () => this.copyToClipboard());
+                this.clearButton.addEventListener('click', () => this.clearAll());
+                this.swapButton.addEventListener('click', () => this.swapLanguages());
+                this.sourceText.addEventListener('input', () => this.updateCharacterCount());
+                this.themeToggle.addEventListener('click', () => this.toggleTheme());
+                
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        if (e.key === 'Enter' && this.isApiReady) {
+                            e.preventDefault();
+                            this.translate();
+                        } else if (e.key === 'k') {
+                            e.preventDefault();
+                            this.apiKeyInput.focus();
+                        }
+                    }
+                });
+            }
+
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            toggleTheme() {
+                const isDark = document.documentElement.classList.contains('dark');
+                
+                if (isDark) {
+                    document.documentElement.classList.remove('dark');
+                    this.themeIcon.className = 'fas fa-moon';
+                    localStorage.setItem('linguaai-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    this.themeIcon.className = 'fas fa-sun';
+                    localStorage.setItem('linguaai-theme', 'dark');
+                }
+            }
+
+            async handleApiKeyInput() {
+                const apiKey = this.apiKeyInput.value.trim();
+                
+                if (!apiKey) {
+                    this.updateApiStatus('disconnected', 'API Key Required');
+                    this.isApiReady = false;
+                    this.translateButton.disabled = true;
+                    return;
+                }
+
+                if (apiKey.length < 32) {
+                    this.updateApiStatus('disconnected', 'Invalid API Key Format');
+                    this.isApiReady = false;
+                    this.translateButton.disabled = true;
+                    return;
+                }
+
+                this.apiKey = apiKey;
+                this.updateApiStatus('testing', 'Validating API Key...');
+                
+                try {
+                    await this.testApiConnection();
+                    await this.loadSupportedLanguages();
+                    this.updateApiStatus('connected', 'API Connected Successfully');
+                    this.isApiReady = true;
+                    this.translateButton.disabled = false;
+                    this.showToast('API Connected', 'Microsoft Translator API connected successfully!', 'success');
+                } catch (error) {
+                    console.error('API validation failed:', error);
+                    this.updateApiStatus('disconnected', 'API Connection Failed');
+                    this.isApiReady = false;
+                    this.translateButton.disabled = true;
+                    this.showToast('Connection Failed', error.message, 'error');
+                }
+            }
+
+            updateApiStatus(status, message) {
+                this.apiStatus.className = `status-indicator ${status}`;
+                
+                const icons = {
+                    connected: 'fas fa-check-circle',
+                    disconnected: 'fas fa-times-circle',
+                    testing: 'fas fa-spinner fa-spin'
+                };
+
+                this.apiStatus.innerHTML = `
+                    <i class="${icons[status]}"></i>
+                    <span>${message}</span>
+                `;
+            }
+
+            async testApiConnection() {
+                try {
+                    const response = await fetch(`${this.endpoint}/languages?api-version=3.0`, {
+                        method: 'GET',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.apiKey,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    return await response.json();
+                } catch (error) {
+                    throw new Error(`API validation failed: ${error.message}`);
+                }
+            }
+
+            async loadSupportedLanguages() {
+                try {
+                    const response = await fetch(`${this.endpoint}/languages?api-version=3.0`, {
+                        method: 'GET',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.apiKey,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    this.supportedLanguages = data.translation;
+                    this.populateLanguageSelectors();
+                } catch (error) {
+                    throw new Error(`Failed to load supported languages: ${error.message}`);
+                }
+            }
+
+            populateLanguageSelectors() {
+                const sourceAutoOption = this.sourceLanguage.querySelector('option[value="auto"]');
+                this.sourceLanguage.innerHTML = '';
+                this.targetLanguage.innerHTML = '';
+                
+                this.sourceLanguage.appendChild(sourceAutoOption);
+
+                const sortedLanguages = Object.entries(this.supportedLanguages)
+                    .sort(([,a], [,b]) => a.name.localeCompare(b.name));
+
+                sortedLanguages.forEach(([code, lang]) => {
+                    const optionText = `${lang.name}`;
+                    
+                    const sourceOption = document.createElement('option');
+                    sourceOption.value = code;
+                    sourceOption.textContent = optionText;
+                    this.sourceLanguage.appendChild(sourceOption);
+                    
+                    const targetOption = document.createElement('option');
+                    targetOption.value = code;
+                    targetOption.textContent = optionText;
+                    this.targetLanguage.appendChild(targetOption);
+                });
+
+                this.targetLanguage.value = 'es';
+            }
+
+            updateCharacterCount() {
+                const count = this.sourceText.value.length;
+                this.characterCount.textContent = `${count.toLocaleString()} / 10,000`;
+                
+                if (count > 9000) {
+                    this.characterCount.style.color = 'var(--color-error)';
+                } else if (count > 7000) {
+                    this.characterCount.style.color = 'var(--color-warning)';
+                } else {
+                    this.characterCount.style.color = 'var(--color-text-tertiary)';
+                }
+            }
+
+            async translate() {
+                if (!this.isApiReady) {
+                    this.showToast('API Required', 'Please configure your API key first', 'error');
+                    return;
+                }
+
+                const text = this.sourceText.value.trim();
+                if (!text) {
+                    this.showToast('Input Required', 'Please enter text to translate', 'warning');
+                    return;
+                }
+
+                if (this.sourceLanguage.value === this.targetLanguage.value && this.sourceLanguage.value !== 'auto') {
+                    this.showToast('Same Languages', 'Source and target languages are identical', 'warning');
+                    return;
+                }
+
+                this.setLoadingState(true);
+                
+                try {
+                    let detectedLanguage = null;
+
+                    if (this.sourceLanguage.value === 'auto') {
+                        detectedLanguage = await this.detectLanguage(text);
+                        
+                        if (detectedLanguage && detectedLanguage.language === this.targetLanguage.value) {
+                            this.showToast('Same Languages', 'Detected language matches target language', 'warning');
+                            this.setLoadingState(false);
+                            return;
+                        }
+                    }
+
+                    const result = await this.translateText(text, this.sourceLanguage.value, this.targetLanguage.value);
+                    
+                    if (result && result.length > 0) {
+                        const translation = result[0].translations[0].text;
+                        const confidence = result[0].translations[0].confidence || null;
+                        
+                        if (detectedLanguage) {
+                            this.showDetectedLanguage(detectedLanguage);
+                        } else {
+                            this.detectedLanguage.style.display = 'none';
+                        }
+
+                        this.displayTranslation(translation, confidence);
+                        this.showToast('Success', 'Translation completed successfully!', 'success');
+                    } else {
+                        throw new Error('No translation received from API');
+                    }
+                    
+                } catch (error) {
+                    console.error('Translation error:', error);
+                    this.showToast('Translation Failed', error.message, 'error');
+                    this.showTranslationError(error.message);
+                } finally {
+                    this.setLoadingState(false);
+                }
+            }
+
+            async detectLanguage(text) {
+                try {
+                    const response = await fetch(`${this.endpoint}/detect?api-version=3.0`, {
+                        method: 'POST',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.apiKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify([{ text: text }])
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Language detection failed: ${response.status} ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    return result[0];
+                } catch (error) {
+                    console.error('Language detection error:', error);
+                    throw error;
+                }
+            }
+
+            async translateText(text, fromLang, toLang) {
+                try {
+                    const params = new URLSearchParams({
+                        'api-version': '3.0',
+                        'to': toLang,
+                        'includeAlignment': 'false',
+                        'includeSentenceLength': 'false'
+                    });
+
+                    if (fromLang !== 'auto') {
+                        params.append('from', fromLang);
+                    }
+
+                    const response = await fetch(`${this.endpoint}/translate?${params.toString()}`, {
+                        method: 'POST',
+                        headers: {
+                            'Ocp-Apim-Subscription-Key': this.apiKey,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify([{ text: text }])
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.text();
+                        throw new Error(`Translation API error: ${response.status} ${response.statusText}`);
+                    }
+
+                    return await response.json();
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            showDetectedLanguage(detectedLanguage) {
+                const langName = this.supportedLanguages[detectedLanguage.language]?.name || detectedLanguage.language;
+                const confidence = Math.round(detectedLanguage.score * 100);
+                
+                this.detectedLanguage.querySelector('span').textContent = `${langName} (${confidence}%)`;
+                this.detectedLanguage.style.display = 'block';
+                
+                const autoOption = this.sourceLanguage.querySelector('option[value="auto"]');
+                autoOption.textContent = `Auto Detect (${langName})`;
+            }
+
+            displayTranslation(translation, confidence = null) {
+                this.translationOutput.innerHTML = `<div class="output-content">${translation}</div>`;
+                this.copyButton.disabled = false;
+                
+                if (confidence) {
+                    const confidencePercentage = Math.round(confidence * 100);
+                    this.confidenceScore.querySelector('span').textContent = `${confidencePercentage}% confidence`;
+                    this.confidenceScore.style.display = 'block';
+                } else {
+                    this.confidenceScore.style.display = 'none';
+                }
+            }
+
+            showTranslationError(errorMessage) {
+                this.translationOutput.innerHTML = `
+                    <div style="color: var(--color-error); text-align: center; padding: var(--spacing-xl);">
+                        <i class="fas fa-exclamation-triangle" style="font-size: var(--font-size-2xl); margin-bottom: var(--spacing-md);"></i>
+                        <div style="font-weight: 600; margin-bottom: var(--spacing-sm);">Translation Failed</div>
+                        <div style="font-size: var(--font-size-sm); opacity: 0.8;">${errorMessage}</div>
+                    </div>
+                `;
+            }
+
+            async copyToClipboard() {
+                const outputContent = this.translationOutput.querySelector('.output-content');
+                if (!outputContent) return;
+
+                try {
+                    await navigator.clipboard.writeText(outputContent.textContent);
+                    this.showToast('Copied', 'Translation copied to clipboard!', 'success');
+                    
+                    this.copyButton.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.copyButton.style.transform = 'scale(1)';
+                    }, 150);
+                } catch (error) {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = outputContent.textContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    this.showToast('Copied', 'Translation copied successfully!', 'success');
+                }
+            }
+
+            swapLanguages() {
+                if (this.sourceLanguage.value === 'auto') {
+                    this.showToast('Cannot Swap', 'Cannot swap from auto-detect mode', 'warning');
+                    return;
+                }
+
+                const sourceVal = this.sourceLanguage.value;
+                const targetVal = this.targetLanguage.value;
+                const sourceTextVal = this.sourceText.value;
+                const outputContent = this.translationOutput.querySelector('.output-content');
+
+                this.sourceLanguage.value = targetVal;
+                this.targetLanguage.value = sourceVal;
+
+                if (outputContent && sourceTextVal) {
+                    this.sourceText.value = outputContent.textContent;
+                    this.displayTranslation(sourceTextVal);
+                }
+
+                this.updateCharacterCount();
+                this.showToast('Languages Swapped', 'Source and target languages have been swapped', 'info');
+                
+                const autoOption = this.sourceLanguage.querySelector('option[value="auto"]');
+                autoOption.textContent = 'Auto Detect';
+            }
+
+            clearAll() {
+                this.sourceText.value = '';
+                this.translationOutput.innerHTML = 'Translation will appear here...';
+                this.copyButton.disabled = true;
+                this.confidenceScore.style.display = 'none';
+                this.detectedLanguage.style.display = 'none';
+                this.updateCharacterCount();
+                
+                const autoOption = this.sourceLanguage.querySelector('option[value="auto"]');
+                autoOption.textContent = 'Auto Detect';
+                
+                this.showToast('Cleared', 'All content has been cleared', 'info');
+            }
+
+            setLoadingState(isLoading) {
+                if (isLoading) {
+                    this.loadingOverlay.classList.add('active');
+                    this.translateButton.disabled = true;
+                    this.translateButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Translating...';
+                } else {
+                    this.loadingOverlay.classList.remove('active');
+                    this.translateButton.disabled = !this.isApiReady;
+                    this.translateButton.innerHTML = '<i class="fas fa-magic"></i> Translate';
+                }
+            }
+
+            showToast(title, message, type = 'info') {
+                const toastId = ++this.toastId;
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.innerHTML = `
+                    <div class="toast-icon">
+                        <i class="fas ${this.getToastIcon(type)}"></i>
+                    </div>
+                    <div class="toast-content">
+                        <div class="toast-title">${title}</div>
+                        <div class="toast-message">${message}</div>
+                    </div>
+                `;
+
+                this.toastContainer.appendChild(toast);
+                
+                setTimeout(() => toast.classList.add('show'), 100);
+                
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (toast.parentNode) {
+                            toast.parentNode.removeChild(toast);
+                        }
+                    }, 300);
+                }, 4000);
+            }
+
+            getToastIcon(type) {
+                const icons = {
+                    success: 'fa-check',
+                    error: 'fa-times',
+                    warning: 'fa-exclamation',
+                    info: 'fa-info'
+                };
+                return icons[type] || icons.info;
+            }
+
+            showWelcomeMessage() {
+                setTimeout(() => {
+                    this.showToast(
+                        'Welcome to LinguaAI Pro',
+                        'Enter your Microsoft Translator API key to start translating',
+                        'info'
+                    );
+                }, 1000);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            new LinguaAIPro();
+            
+            // Network status monitoring
+            window.addEventListener('online', () => {
+                console.log('Connection restored');
+            });
+
+            window.addEventListener('offline', () => {
+                console.log('Connection lost');
+            });
+        });
+    </script>
+</body>
+</html>
