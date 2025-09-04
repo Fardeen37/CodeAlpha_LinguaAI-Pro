@@ -103,7 +103,7 @@ Then double-click `LinguaAI PRO.html` or open it in your browser.
 ```
 CodeAlpha_LinguaAI-Pro/
 │
-├── LinguaAI Pro.html                     # Main application file
+├── LinguaAI PRO.html                     # Main application file
 ├── README.md                             # Documentation
 ```
 
