@@ -146,4 +146,4 @@ This project is licensed under the **MIT License** – you are free to use, modi
 ## 👨‍💻 Author
 
 **Data Fardeen**
-📌 GitHub: [Fardeen37](https://github.com/Fardeen37)]
+📌 GitHub: [Fardeen37](https://github.com/Fardeen37)
